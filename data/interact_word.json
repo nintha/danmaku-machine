@@ -1,0 +1,31 @@
+{
+  "cmd": "INTERACT_WORD",
+  "data": {
+    "fans_medal": {
+      "anchor_roomid": 1016,
+      "guard_level": 0,
+      "icon_id": 0,
+      "is_lighted": 1,
+      "medal_color": 6406234,
+      "medal_color_border": 6406234,
+      "medal_color_end": 6406234,
+      "medal_color_start": 6406234,
+      "medal_level": 3,
+      "medal_name": "陆夫人",
+      "special": "",
+      "target_id": 419220
+    },
+    "identities": [
+      3
+    ],
+    "is_spread": 0,
+    "msg_type": 1,
+    "roomid": 1016,
+    "score": 1603495300878477436,
+    "spread_info": "",
+    "timestamp": 1603505300,
+    "uid": 137466552,
+    "uname": "望尘持剑",
+    "uname_color": ""
+  }
+}
