@@ -1,17 +1,20 @@
-use iced::{Align, Application, button, Button, Column, Command, Container, Element, executor, Length, Settings, Subscription, Text, Row, window, Scrollable, scrollable, Color, TextInput, text_input};
-use crate::damuku::DanmakuClient;
-use futures::channel::mpsc::{unbounded, UnboundedReceiver};
-use crate::entity::LiveMsg;
-use async_std::sync::{Mutex, Arc};
-use crate::textsink::sink;
+use async_std::sync::{Arc, Mutex};
 use font_kit::source::SystemSource;
+use futures::channel::mpsc::{unbounded, UnboundedReceiver};
+use iced::{Align, Application, button, Button, Color, Column, Command, Container, Element, executor, Length, Rectangle, Row, Scrollable, scrollable, Settings, Size, Subscription, Text, text_input, TextInput, window};
 use once_cell::sync::OnceCell;
+
+use crate::damuku::DanmakuClient;
+use crate::entity::LiveMsg;
+use crate::textsink::sink;
 
 pub mod common;
 pub mod damuku;
 pub mod entity;
 pub mod textsink;
 pub mod timer;
+
+pub const DANMAKU_LINE_HEIGHT: u16 = 18;
 
 fn global_font() -> &'static [u8] {
     static INSTANCE: OnceCell<Arc<Vec<u8>>> = OnceCell::new();
@@ -155,7 +158,7 @@ impl Application for Example {
     }
 
     fn background_color(&self) -> Color {
-        Color::new(0.3, 0.3, 0.3, 0.3)
+        Color::new(0.7, 0.7, 0.7, 0.7)
     }
 
     fn view(&mut self) -> Element<Message> {
@@ -197,13 +200,17 @@ impl Application for Example {
                     .width(Length::Units(60))
                     .on_press(Message::Stop);
 
+                let content_height = lines.len() as f32 * DANMAKU_LINE_HEIGHT as f32;
+                scroll_state.scroll_to(1.0,
+                                       Rectangle::with_size(Size { width: 400.0, height: 400.0 }),
+                                       Rectangle::with_size(Size { width: 400.0, height: content_height }));
+
                 let mut scrollable = Scrollable::new(scroll_state).height(Length::Fill);
                 for line in lines {
                     if let Some(t) = line.as_iced_text() {
                         scrollable = scrollable.push(t);
                     }
                 }
-
 
                 Row::new()
                     .width(Length::Fill)

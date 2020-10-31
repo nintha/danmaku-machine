@@ -1,6 +1,7 @@
 use serde::Deserialize;
 use serde_json::Value;
-use iced::{Text, Color};
+use iced::{Text, Color, Length};
+use crate::DANMAKU_LINE_HEIGHT;
 
 #[derive(Debug, Deserialize, Default, Clone)]
 pub struct Data {
@@ -55,11 +56,11 @@ impl LiveMsg {
             Self::CMD_DANMU_MSG => {
                 let danmaku = self.as_danmaku().unwrap();
                 let text = format!("{}: {}", &danmaku.uname, &danmaku.text);
-                Some(Text::new(text))
+                Some(Text::new(text).height(Length::Units(DANMAKU_LINE_HEIGHT)))
             }
             Self::CMD_SEND_GIFT => {
                 let text = format!("{}: {} {}\n", &self.data.uname, &self.data.action, &self.data.gift_name);
-                Some(Text::new(text).color(Color::from_rgb(1.0, 0.5, 0.5)))
+                Some(Text::new(text).color(Color::from_rgb(1.0, 0.5, 0.5)).height(Length::Units(DANMAKU_LINE_HEIGHT)))
             }
             _ => None
         }
